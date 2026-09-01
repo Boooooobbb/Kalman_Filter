@@ -38,18 +38,6 @@
    - 协方差更新  
      $P_{k|k} = (I - K_kH)P_{k|k-1}$
 
-## 🏗️ Project Structure
-
-> 请按你的实际文件名调整（下面是推荐结构）
-
-```text
-Kalman_Filter/
-├─ kalman_filter.py        # 卡尔曼滤波核心实现
-├─ example.py              # 示例脚本（构造观测数据并运行滤波）
-├─ requirements.txt        # 依赖列表（如 numpy / matplotlib）
-└─ README.md
-```
-
 ## ⚙️ Environment
 
 - Python 3.8+
@@ -98,13 +86,6 @@ python example.py
 
 > 本仓库为个人学习复现项目，核心思路参考上述教学内容。
 
-## 🛣️ Roadmap
-
-- [ ] 增加 1D / 2D 多场景示例
-- [ ] 增加参数敏感性实验（Q/R 对滤波效果影响）
-- [ ] 增加可视化与实验报告
-- [ ] 封装为可复用类接口
-- [ ] 扩展到 EKF / UKF
 
 ## 🤝 Contributing
 
