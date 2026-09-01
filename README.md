@@ -25,28 +25,18 @@
 标准离散卡尔曼滤波通常分为两步：
 
 1. **Predict（预测）**
-   - 状态预测  
-     \[
-     \hat{x}_{k|k-1} = A\hat{x}_{k-1|k-1} + Bu_k
-     \]
+   - 状态预测
+     $\hat{x}_{k|k-1} = A \hat{x}_{k-1|k-1} + B u_k$
    - 协方差预测  
-     \[
-     P_{k|k-1} = AP_{k-1|k-1}A^T + Q
-     \]
+     $P_{k|k-1} = AP_{k-1|k-1}A^T + Q$
 
 2. **Update（更新）**
    - 卡尔曼增益  
-     \[
-     K_k = P_{k|k-1}H^T(HP_{k|k-1}H^T + R)^{-1}
-     \]
-   - 状态更新  
-     \[
-     \hat{x}_{k|k} = \hat{x}_{k|k-1} + K_k(z_k - H\hat{x}_{k|k-1})
-     \]
+     $K_k = P_{k|k-1}H^T(HP_{k|k-1}H^T + R)^{-1}$
+   - 状态更新
+     $\hat x_{k|k} = \hat x_{k|k-1} + K_k(z_k - H \hat x_{k|k-1})$
    - 协方差更新  
-     \[
-     P_{k|k} = (I - K_kH)P_{k|k-1}
-     \]
+     $P_{k|k} = (I - K_kH)P_{k|k-1}$
 
 ## 🏗️ Project Structure
 
