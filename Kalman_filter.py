@@ -61,6 +61,13 @@ prior_v = []
 pos_position = []
 pos_v = []
 
+# The covariance diagonal history (posterior variance)
+p_position = []
+p_velocity = []
+
+# The Kalman gain history
+K_history = []
+
 for i in range(step):
     t.append(i + 1)
     # Generate the process noise
@@ -97,6 +104,11 @@ for i in range(step):
     # Update p
     p = (I - K @ H) @ p_prior
 
+    # Record posterior variance (diagonal of P) and Kalman gain
+    p_position.append(p[0, 0])
+    p_velocity.append(p[1, 1])
+    K_history.append(K.copy())
+
     print("---Step", i + 1, "---")
     print("Process Noise: ")
     print(w)
@@ -132,5 +144,31 @@ ax2.set_ylabel('Velocity')
 ax2.legend(loc='best')
 ax2.grid(True)
 
-plt.tight_layout()
+fig.tight_layout()
+
+# ========== Covariance & Kalman Gain Convergence ==========
+K_arr = np.array(K_history)  # shape (step, 2, 2)
+
+fig2, (ax3, ax4) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+
+# ---------- Posterior variance (diagonal of P) ----------
+ax3.plot(t, p_position, label='Position variance P[0,0]', color='blue', marker='o', markersize=4)
+ax3.plot(t, p_velocity, label='Velocity variance P[1,1]', color='orange', marker='s', markersize=4)
+ax3.set_ylabel('Variance')
+ax3.set_title('Covariance Convergence (posterior P diagonal)')
+ax3.legend(loc='best')
+ax3.grid(True)
+
+# ---------- Kalman gain ----------
+ax4.plot(t, K_arr[:, 0, 0], label='K[0,0]', color='blue', marker='o', markersize=4)
+ax4.plot(t, K_arr[:, 0, 1], label='K[0,1]', color='green', marker='s', markersize=4)
+ax4.plot(t, K_arr[:, 1, 0], label='K[1,0]', color='red', marker='^', markersize=4)
+ax4.plot(t, K_arr[:, 1, 1], label='K[1,1]', color='orange', marker='.', markersize=4)
+ax4.set_xlabel('Time')
+ax4.set_ylabel('Kalman Gain')
+ax4.set_title('Kalman Gain Convergence')
+ax4.legend(loc='best')
+ax4.grid(True)
+
+fig2.tight_layout()
 plt.show()
